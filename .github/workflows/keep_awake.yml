@@ -1,0 +1,28 @@
+name: Keep Streamlit Awake (Playwright)
+
+on:
+  schedule:
+    - cron: "*/20 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Playwright
+        run: |
+          npm init -y
+          npm i playwright
+
+      - name: Run headless browser ping
+        env:
+          TARGET_URL: "https://cumulative-ability-app-acdeqssizvwnjw9x9uhynd9v.streamlit.app/"
+        run: node .github/scripts/keep_awake.js
