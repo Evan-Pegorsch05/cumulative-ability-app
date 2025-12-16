@@ -8,7 +8,7 @@ on:
 jobs:
   ping:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v4
@@ -17,10 +17,11 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install Playwright
+      - name: Install Playwright + Chromium
         run: |
           npm init -y
           npm i playwright
+          npx playwright install --with-deps chromium
 
       - name: Run headless browser ping
         env:
